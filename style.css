@@ -1,0 +1,15 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap");
+:root {
+  --text: #061b21;
+  --background: #fafdfe;
+  --background-60: #f3f4f8;
+  --primary: #40c2e2;
+  --primary-20: #ecf9fc;
+  --primary-50: #68d0e9;
+  --secondary: #ffc61a;
+  --secondar-50: #fef0ec;
+  --accent: #7e58e2;
+}
+.book-card {
+  margin-top: 16px;
+}

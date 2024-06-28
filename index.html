@@ -2,16 +2,48 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Library</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Library</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-    <h1>Library</h1>
+  <h1>Library</h1>
+  <button id="add-btn" class="btn">Add book</button>
+  <div id="library-container">
 
-    <script src="script.js"></script>
+  </div>
+  <dialog id="dialog-form">
+    <form method="dialog">
+      <h2>Details of new book</h2>
+      <label for="title">
+        Title
+        <input id="title" name="title" type="text">
+      </label>
+      <label for="author">
+        Author
+        <input id="author" name="author" type="text">
+      </label>
+      <label for="year">
+        Year
+        <input id="year" name="year" type="number">
+      </label>
+      <label for="Read">
+        Status
+        <input type="number">
+      </label>
+      <div>
+        <input type="radio" id="read-status1" name="read-status" value="1">
+        <label for="read-status1">Read</label>
+        <input type="radio" id="read-status2" name="read-status" value="0" checked>
+        <label for="read-status2">Not read</label>
+      </div>
+      <input type="submit" id="noval-close" value="Cancel" formnovalidate>
+      <input type="submit" id="confirm" value="Add book">
+    </form>
+  </dialog>
+  <script src="script.js"></script>
 </body>
 
 </html>
