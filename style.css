@@ -23,6 +23,7 @@
   --space-3x: 24px;
   --space-4x: 32px;
   --space-5x: 40px;
+  --space-6x: 40px;
 }
 * {
   box-sizing: border-box;
@@ -47,12 +48,26 @@ body {
   background-color: var(--background-60);
 }
 .container {
+  margin: var(--space-5x) auto;
   width: min(1280px, 70vw);
   min-width: 320px;
   border-radius: var(--space-2x);
-  padding: var(--space-4x);
-  margin: var(--space-5x) auto;
+  padding: var(--space-6x);
   background-color: var(--background);
+}
+.sub-title-lib .icon-btn-primary {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1x);
+  padding: var(--space-1x);
+  background-color: var(--primary);
+  color: var(--background);
+}
+.icon-btn-primary:active {
+  background-color: var(--primary-50);
+}
+#add-btn img {
+  height: 32px;
 }
 .flex {
   display: flex;
@@ -64,6 +79,7 @@ body {
   text-align: center;
 }
 .sub-title-lib {
+  align-items: center;
   gap: var(--space-2x);
   margin-top: var(--space-4x);
   margin-bottom: var(--space-3x);
@@ -71,15 +87,16 @@ body {
 .y-center {
   align-items: center;
 }
+.btn-wrapper .icon-btn {
+  padding: calc(var(--space-1x) * 0.75);
+}
 .read-wrapper {
   gap: var(--space-1x);
+  font-size: smaller;
   color: var(--text-60);
 }
 .book-card-icon {
   height: 32px;
-}
-.icon-btn {
-  padding: calc(var(--space-1x) * 0.75);
 }
 .round-corners-1x {
   border-radius: var(--space-1x);
@@ -87,14 +104,20 @@ body {
 .btn-disabled {
   background-color: var(--text-30);
 }
+.btn-disabled:active {
+  background-color: var(--text-10);
+}
 .active-toggle {
   background-color: var(--secondary);
+}
+.active-toggle:active {
+  background-color: var(--secondary-50);
 }
 
 #library-container {
   margin-top: var(--space-2x);
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(256px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
   gap: var(--space-4x);
 }
 .book-card {
@@ -105,9 +128,6 @@ body {
   border-radius: var(--space-2x);
   padding: var(--space-3x);
 }
-/* .book-card > div + div {
-  margin-bottom: var(--space-3x);
-} */
 .book-card .title {
   font-size: larger;
   font-weight: 700;
@@ -134,13 +154,7 @@ body {
 .del-btn:active {
   background-color: var(--warning-50);
 }
-.toggle-btn {
-  background-color: var(--secondary);
-}
-.toggle-btn:active {
-  background-color: var(--secondary-50);
-}
-.color-primary {
+.primary-color {
   color: var(--primary);
 }
 .hidden {
