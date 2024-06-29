@@ -1,4 +1,4 @@
-const iconPath = "icon/";
+const iconPath = "icons/";
 const library = [];
 const bookCheckIcon = iconPath + "book-check.svg";
 const bookClockIcon = iconPath + "book-clock.svg";
@@ -21,7 +21,9 @@ Object.defineProperty(Book, "id", {
 Book.prototype.info = function () {
   return `${this.id} - ${this.name} by ${this.author} (${this.year}), ${this.read}`;
 };
-
+Book.prototype.switchReadStatus = function () {
+  this.read = !this.read;
+};
 function createBookCard(book) {
   let bookCard = document.createElement("div");
   let contentSection = document.createElement("div");
@@ -82,7 +84,7 @@ function createBookCard(book) {
     libraryContainer.removeChild(bookCard);
   });
   toggleWrapper.addEventListener("click", () => {
-    book.read = !book.read;
+    book.switchReadStatus();
     readDesc.textContent = book.read ? "Already read" : "Not read yet";
     let readIcon = book.read ? bookCheckIcon : bookClockIcon;
     readIconElement.src = readIcon;
@@ -114,15 +116,26 @@ const libraryContainer = document.getElementById("library-container");
 const showDialog = document.getElementById("add-btn");
 const dialogForm = document.getElementById("dialog-form");
 const addButton = document.querySelector(`dialog#dialog-form input#confirm`);
+const cancelButton = document.querySelector(
+  `dialog#dialog-form input#noval-close`
+);
 // input
 const titleField = document.querySelector("input#title");
 const authorField = document.querySelector("input#author");
 const yearField = document.querySelector("input#year");
+const pagesField = document.querySelector("input#pages");
 const readField = document.querySelector("input#read-status1");
 // event listeners
-function createBookForm(title, author, year, read) {
-  let newBook = new Book(title, author, year, read);
+function createBookForm(title, author, year, pages, read) {
+  let newBook = new Book(title, author, year, pages, read);
   addToLibrary(newBook);
+}
+function resetDialogFields() {
+  titleField.value = "";
+  authorField.value = "";
+  yearField.value = "";
+  pagesField.value = "";
+  readField.checked = true;
 }
 showDialog.addEventListener("click", () => {
   dialogForm.showModal();
@@ -130,11 +143,15 @@ showDialog.addEventListener("click", () => {
 addButton.addEventListener("click", (event) => {
   event.preventDefault();
   let year = parseInt(yearField.value);
+  let pages = parseInt(pagesField.value);
   let readStatus = readField.checked;
-  createBookForm(titleField.value, authorField.value, year, readStatus);
+  createBookForm(titleField.value, authorField.value, year, pages, readStatus);
+  resetDialogFields();
   dialogForm.close();
 });
-
+cancelButton.addEventListener("click", () => {
+  resetDialogFields();
+});
 // main
 let b1 = new Book("Pride and Prejudice", "Jane Austen", 1813, 352, 0);
 let b2 = new Book(

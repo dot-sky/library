@@ -12,12 +12,13 @@
   <div class="main">
     <div class="container">
       <div class="title-wrapper text-center ">
-        <h1>Mind Library</h1>
+        <img src="icons/wave-64.png" alt="">
+        <h1><span class="primary-color">Wave</span> Library</h1>
       </div>
       <div class="lib-header flex space-between y-center ">
-        <h2 class="primary-color">Your Books</h2>
+        <h2>Your Books</h2>
         <div id="add-btn" class="btn btn-primary round-corners-1x flex y-center">
-          <img src="icon/book-plus.svg" alt="">
+          <img src="icons/book-plus.svg" alt="">
           Add book
         </div>
       </div>
@@ -27,31 +28,47 @@
   </div>
   <dialog id="dialog-form">
     <form method="dialog">
-      <h2>Details of new book</h2>
-      <label for="title">
-        Title
-        <input id="title" name="title" type="text">
-      </label>
-      <label for="author">
-        Author
-        <input id="author" name="author" type="text">
-      </label>
-      <label for="year">
-        Year
-        <input id="year" name="year" type="number">
-      </label>
-      <label for="Read">
-        Status
-        <input type="number">
-      </label>
-      <div>
-        <input type="radio" id="read-status1" name="read-status" value="1">
-        <label for="read-status1">Read</label>
-        <input type="radio" id="read-status2" name="read-status" value="0" checked>
-        <label for="read-status2">Not read</label>
+      <h2 class="title text-center">New Book</h2>
+      <div class="input-group">
+        <div>
+          <label for="title">
+            Title
+          </label>
+          <input id="title" name="title" type="text">
+        </div>
+        <div>
+          <label for="author">
+            Author
+          </label>
+          <input id="author" name="author" type="text">
+        </div>
+        <div>
+          <label for="year">
+            Year
+          </label>
+          <input id="year" name="year" type="number">
+        </div>
+        <div>
+          <label for="read">
+            Pages
+          </label>
+          <input id="pages" name="pages" type="number">
+        </div>
+        <div class="radio-group">
+          <div>
+            <input type="radio" id="read-status1" name="read-status" value="1">
+            <label for="read-status1">Read</label>
+          </div>
+          <div>
+            <input type="radio" id="read-status2" name="read-status" value="0" checked>
+            <label for="read-status2">Not read</label>
+          </div>
+        </div>
       </div>
-      <input type="submit" id="noval-close" value="Cancel" formnovalidate>
-      <input type="submit" id="confirm" value="Add book">
+      <div class="button-group">
+        <input type="submit" id="noval-close" value="Cancel" formnovalidate>
+        <input type="submit" id="confirm" value="Add book">
+      </div>
     </form>
   </dialog>
   <script src="script.js"></script>

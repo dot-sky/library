@@ -151,11 +151,67 @@ body {
 .primary-color {
   color: var(--primary);
 }
-
-/* .btn {
+dialog {
+  background-color: var(--background);
+  margin: auto auto;
   border-radius: var(--space-1x);
-  padding: var(--space-1x) var(--space-1x);
-  min-width: none;
-  color: var(--background);
+  border: 0px;
+  padding: var(--space-3x);
+}
+dialog .title {
+  margin-bottom: var(--space-3x);
+}
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2x);
+}
+.input-group div {
+  display: flex;
+  align-items: center;
+}
+.input-group div label {
+  min-width: 64px;
+}
+dialog input {
+  font-size: 100%;
+  border-radius: 4px;
+  padding: 4px 8px;
+  border: 1px solid var(--text-60);
+  color: var(--text-80);
+}
+dialog input:focus {
+  border: 1px solid var(--text);
+}
+dialog .radio-group {
+  display: flex;
+  margin-bottom: var(--space-2x);
+  gap: var(--space-2x);
+}
+dialog .radio-group div {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: var(--space-1x);
+}
+input {
+  outline: none;
+}
+input[type="submit"] {
   background-color: var(--primary);
-} */
+  border-radius: var(--space-1x);
+  border: 0px;
+  color: white;
+  padding: var(--space-2x);
+}
+.button-group {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-2x);
+}
+.button-group input {
+  flex: 1;
+}
+::backdrop {
+  background-color: rgba(0, 0, 0, 0.6);
+}
