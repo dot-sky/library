@@ -1,6 +1,7 @@
 const iconPath = "icon/";
 const library = [];
-
+const bookCheckIcon = iconPath + "book-check.svg";
+const bookClockIcon = iconPath + "book-clock.svg";
 function Book(name, author, year, pages, read) {
   this.id = Book.id; // unique identifier for every book object
   this.name = name;
@@ -22,59 +23,72 @@ Book.prototype.info = function () {
 
 function createBookCard(book) {
   let bookCard = document.createElement("div");
+  let contentSection = document.createElement("div");
   let title = document.createElement("div");
   let desc = document.createElement("div");
   let pages = document.createElement("div");
+
   let btnWrapper = document.createElement("div");
   let delButton = document.createElement("div");
-
   let readWrapper = document.createElement("div");
   let readDesc = document.createElement("div");
-  let toggleRead = document.createElement("div");
+  let toggleWrapper = document.createElement("div");
   let readIconElement = document.createElement("img");
 
-  let bookId = document.createElement("p");
-
-  bookCard.classList.add("book-card");
+  bookCard.classList.add("book-card", "flex");
   title.classList.add("title");
   desc.classList.add("desc");
   readDesc.classList.add("status");
   readWrapper.classList.add("read-wrapper", "flex", "y-center");
   btnWrapper.classList.add("btn-wrapper");
   delButton.classList.add("btn", "del-btn");
-  bookId.classList.add("hidden", "id-element");
-  toggleRead.classList.add("btn", "toggle-btn");
   readIconElement.classList.add("book-card-icon");
-
+  toggleWrapper.classList.add("icon-btn", "round-corners-1x");
+  if (book.read) {
+    toggleWrapper.classList.add("active-toggle");
+  } else {
+    toggleWrapper.classList.add("btn-disabled");
+  }
+  // content
   title.textContent = book.name;
   desc.textContent = `${book.author} (${book.year})`;
   pages.textContent = `${book.pages} ${book.pages > 1 ? "pages" : "page"}`;
   readDesc.textContent = book.read ? "Already read" : "Not read yet";
   delButton.textContent = "X";
-  bookId.textContent = book.id;
-  let readIcon = book.read ? "book-check.svg" : "book-clock.svg";
-  readIconElement.src = iconPath + readIcon;
+  let readIcon = book.read ? bookCheckIcon : bookClockIcon;
+  readIconElement.src = readIcon;
 
-  bookCard.appendChild(title);
-  bookCard.appendChild(desc);
-  bookCard.appendChild(pages);
-  toggleRead.appendChild(readIconElement);
-  readWrapper.appendChild(toggleRead);
+  contentSection.appendChild(title);
+  contentSection.appendChild(desc);
+  contentSection.appendChild(pages);
+  toggleWrapper.appendChild(readIconElement);
   readWrapper.appendChild(readDesc);
+  readWrapper.appendChild(toggleWrapper);
   btnWrapper.appendChild(delButton);
   btnWrapper.appendChild(readWrapper);
+  bookCard.appendChild(contentSection);
   bookCard.appendChild(btnWrapper);
-  bookCard.appendChild(bookId);
   libraryContainer.appendChild(bookCard);
   delButton.addEventListener("click", () => {
     removeFromLibrary(book.id);
     libraryContainer.removeChild(bookCard);
   });
-  toggleRead.addEventListener("click", () => {
+  toggleWrapper.addEventListener("click", () => {
     book.read = !book.read;
     readDesc.textContent = book.read ? "Already read" : "Not read yet";
-    let readIcon = book.read ? "book-check.svg" : "book-clock.svg";
-    readIconElement.src = iconPath + readIcon;
+    let readIcon = book.read ? bookCheckIcon : bookClockIcon;
+    readIconElement.src = readIcon;
+    // change background of toggle wrapper
+    let oldClass, currentClass;
+    if (book.read) {
+      oldClass = "btn-disabled";
+      currentClass = "active-toggle";
+    } else {
+      oldClass = "active-toggle";
+      currentClass = "btn-disabled";
+    }
+    toggleWrapper.classList.remove(oldClass);
+    toggleWrapper.classList.add(currentClass);
     console.log(library);
   });
 }
@@ -122,7 +136,13 @@ let b2 = new Book(
   487,
   1
 );
-let b3 = new Book("The lord of the Rings", "J.R.R. Tolkien", 1954, 436, 1);
+let b3 = new Book(
+  "The Lord of the Rings: The Fellowship of the Ring",
+  "J.R.R. Tolkien",
+  1954,
+  436,
+  1
+);
 let b5 = new Book(
   "The Ministry for the Future",
   "Kim Stanley Robinson",

@@ -1,7 +1,10 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap");
 :root {
   --text: #061b21;
-  --text-60: #737e81;
+  --text-80: #737e81;
+  --text-60: #96a4a8;
+  --text-30: #cecece;
+  --text-20: #dfdddd;
   --text-10: #e1e6e6;
   --background: #fafdfe;
   --background-60: #f3f4f8;
@@ -70,10 +73,24 @@ body {
 }
 .read-wrapper {
   gap: var(--space-1x);
+  color: var(--text-60);
 }
 .book-card-icon {
   height: 32px;
 }
+.icon-btn {
+  padding: calc(var(--space-1x) * 0.75);
+}
+.round-corners-1x {
+  border-radius: var(--space-1x);
+}
+.btn-disabled {
+  background-color: var(--text-30);
+}
+.active-toggle {
+  background-color: var(--secondary);
+}
+
 #library-container {
   margin-top: var(--space-2x);
   display: grid;
@@ -81,18 +98,23 @@ body {
   gap: var(--space-4x);
 }
 .book-card {
+  flex-direction: column;
+  justify-content: space-between;
+  gap: var(--space-4x);
   box-shadow: 2px 2px 4px 1px var(--text-10);
   border-radius: var(--space-2x);
   padding: var(--space-3x);
 }
-.book-card > div + div {
+/* .book-card > div + div {
   margin-bottom: var(--space-3x);
-}
+} */
 .book-card .title {
   font-size: larger;
   font-weight: 700;
 }
 .book-card .desc {
+  margin-top: var(--space-1x);
+  margin-bottom: var(--space-1x);
   color: var(--text-60);
 }
 .btn-wrapper {
@@ -101,7 +123,7 @@ body {
 }
 .btn {
   border-radius: var(--space-1x);
-  padding: var(--space-1x) var(--space-2x);
+  padding: var(--space-1x) var(--space-1x);
   min-width: none;
   color: var(--background);
   background-color: var(--primary);
