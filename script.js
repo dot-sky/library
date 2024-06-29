@@ -1,10 +1,11 @@
 const library = [];
 
-function Book(name, author, year, read) {
-  this.id = Book.id;
+function Book(name, author, year, pages, read) {
+  this.id = Book.id; // unique identifier for every book object
   this.name = name;
   this.author = author;
   this.year = year;
+  this.pages = pages;
   this.read = read;
   Book.id++;
 }
@@ -22,30 +23,40 @@ function createBookCard(book) {
   let bookCard = document.createElement("div");
   let title = document.createElement("div");
   let desc = document.createElement("div");
-  let status = document.createElement("div");
+  let readDesc = document.createElement("div");
+  let pages = document.createElement("div");
+  let btnWrapper = document.createElement("div");
   let delButton = document.createElement("div");
+  let readWrapper = document.createElement("div");
   let toggleRead = document.createElement("div");
   let bookId = document.createElement("p");
 
   bookCard.classList.add("book-card");
   title.classList.add("title");
   desc.classList.add("desc");
-  status.classList.add("status");
+  readDesc.classList.add("status");
+  readWrapper.classList.add("read-wrapper", "flex", "y-center");
+  btnWrapper.classList.add("btn-wrapper");
   delButton.classList.add("btn", "del-btn");
   bookId.classList.add("hidden", "id-element");
+  toggleRead.classList.add("btn", "toggle-btn");
 
   title.textContent = book.name;
-  desc.textContent = `by ${book.author}, ${book.year}`;
-  status.textContent = book.read ? "Already read" : "Not read yet";
-  delButton.textContent = "Remove";
+  desc.textContent = `${book.author} (${book.year})`;
+  pages.textContent = `${book.pages} ${book.pages > 1 ? "pages" : "page"}`;
+  readDesc.textContent = book.read ? "Already read" : "Not read yet";
+  delButton.textContent = "X";
   bookId.textContent = book.id;
-  toggleRead.textContent = "Toggle Read";
+  toggleRead.textContent = "Read";
 
   bookCard.appendChild(title);
   bookCard.appendChild(desc);
-  bookCard.appendChild(status);
-  bookCard.appendChild(delButton);
-  bookCard.appendChild(toggleRead);
+  bookCard.appendChild(pages);
+  readWrapper.appendChild(toggleRead);
+  readWrapper.appendChild(readDesc);
+  btnWrapper.appendChild(delButton);
+  btnWrapper.appendChild(readWrapper);
+  bookCard.appendChild(btnWrapper);
   bookCard.appendChild(bookId);
   libraryContainer.appendChild(bookCard);
   delButton.addEventListener("click", () => {
@@ -54,7 +65,7 @@ function createBookCard(book) {
   });
   toggleRead.addEventListener("click", () => {
     updateBookReadStatus(book.id);
-    status.textContent = book.read ? "Already read" : "Not read yet";
+    readDesc.textContent = book.read ? "Already read" : "Not read yet";
     console.log(library);
   });
 }
@@ -104,10 +115,21 @@ addButton.addEventListener("click", (event) => {
 });
 
 // main
-let b1 = new Book("book1", "author1", 2023, false);
-let b2 = new Book("book2", "author2", 2022, true);
-let b3 = new Book("book3", "author3", 2022, false);
-// let b4 = new Book("book4", "author4", 2021, false);
+let b1 = new Book("Pride and Prejudice", "Jane Austen", 1813, 352, 0);
+let b2 = new Book(
+  "One Hundred Years of Solitude",
+  "Gabriel Garcia Marquez",
+  1967,
+  487,
+  1
+);
+let b3 = new Book("The lord of the Rings", "J.R.R. Tolkien", 1954, 436, 1);
+let b5 = new Book(
+  "The Ministry for the Future",
+  "Kim Stanley Robinson",
+  720,
+  0
+);
 
 addToLibrary(b1);
 addToLibrary(b2);
