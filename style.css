@@ -71,6 +71,9 @@ body {
 .read-wrapper {
   gap: var(--space-1x);
 }
+.book-card-icon {
+  height: 32px;
+}
 #library-container {
   margin-top: var(--space-2x);
   display: grid;

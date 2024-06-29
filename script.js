@@ -1,3 +1,4 @@
+const iconPath = "icon/";
 const library = [];
 
 function Book(name, author, year, pages, read) {
@@ -23,12 +24,15 @@ function createBookCard(book) {
   let bookCard = document.createElement("div");
   let title = document.createElement("div");
   let desc = document.createElement("div");
-  let readDesc = document.createElement("div");
   let pages = document.createElement("div");
   let btnWrapper = document.createElement("div");
   let delButton = document.createElement("div");
+
   let readWrapper = document.createElement("div");
+  let readDesc = document.createElement("div");
   let toggleRead = document.createElement("div");
+  let readIconElement = document.createElement("img");
+
   let bookId = document.createElement("p");
 
   bookCard.classList.add("book-card");
@@ -40,6 +44,7 @@ function createBookCard(book) {
   delButton.classList.add("btn", "del-btn");
   bookId.classList.add("hidden", "id-element");
   toggleRead.classList.add("btn", "toggle-btn");
+  readIconElement.classList.add("book-card-icon");
 
   title.textContent = book.name;
   desc.textContent = `${book.author} (${book.year})`;
@@ -47,11 +52,13 @@ function createBookCard(book) {
   readDesc.textContent = book.read ? "Already read" : "Not read yet";
   delButton.textContent = "X";
   bookId.textContent = book.id;
-  toggleRead.textContent = "Read";
+  let readIcon = book.read ? "book-check.svg" : "book-clock.svg";
+  readIconElement.src = iconPath + readIcon;
 
   bookCard.appendChild(title);
   bookCard.appendChild(desc);
   bookCard.appendChild(pages);
+  toggleRead.appendChild(readIconElement);
   readWrapper.appendChild(toggleRead);
   readWrapper.appendChild(readDesc);
   btnWrapper.appendChild(delButton);
@@ -64,8 +71,10 @@ function createBookCard(book) {
     libraryContainer.removeChild(bookCard);
   });
   toggleRead.addEventListener("click", () => {
-    updateBookReadStatus(book.id);
+    book.read = !book.read;
     readDesc.textContent = book.read ? "Already read" : "Not read yet";
+    let readIcon = book.read ? "book-check.svg" : "book-clock.svg";
+    readIconElement.src = iconPath + readIcon;
     console.log(library);
   });
 }
@@ -73,16 +82,6 @@ function addToLibrary(book) {
   library.push(book);
   createBookCard(book);
 }
-function findBook(bookId) {
-  return null;
-}
-function updateBookReadStatus(bookId) {
-  let index = library.findIndex((book) => book.id === bookId);
-  if (index !== -1) {
-    library[index].read = !library[index].read;
-  }
-}
-
 function removeFromLibrary(bookId) {
   let index = library.findIndex((book) => book.id === bookId);
   if (index !== -1) {
