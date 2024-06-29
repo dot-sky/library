@@ -6,6 +6,7 @@
   --text-30: #cecece;
   --text-20: #dfdddd;
   --text-10: #e1e6e6;
+  --text-5: #f0f0f0;
   --background: #fafdfe;
   --background-60: #f3f4f8;
   --primary: #40c2e2;
@@ -42,33 +43,6 @@ body {
 .h6 {
   font-family: "Inter", Arial, Helvetica, sans-serif;
 }
-.main {
-  display: flex;
-  min-height: 100vh;
-  background-color: var(--background-60);
-}
-.container {
-  margin: var(--space-5x) auto;
-  width: min(1280px, 70vw);
-  min-width: 320px;
-  border-radius: var(--space-2x);
-  padding: var(--space-6x);
-  background-color: var(--background);
-}
-.sub-title-lib .icon-btn-primary {
-  display: flex;
-  align-items: center;
-  gap: var(--space-1x);
-  padding: var(--space-1x);
-  background-color: var(--primary);
-  color: var(--background);
-}
-.icon-btn-primary:active {
-  background-color: var(--primary-50);
-}
-#add-btn img {
-  height: 32px;
-}
 .flex {
   display: flex;
 }
@@ -78,42 +52,51 @@ body {
 .text-center {
   text-align: center;
 }
-.sub-title-lib {
-  align-items: center;
-  gap: var(--space-2x);
-  margin-top: var(--space-4x);
-  margin-bottom: var(--space-3x);
-}
 .y-center {
   align-items: center;
-}
-.btn-wrapper .icon-btn {
-  padding: calc(var(--space-1x) * 0.75);
-}
-.read-wrapper {
-  gap: var(--space-1x);
-  font-size: smaller;
-  color: var(--text-60);
-}
-.book-card-icon {
-  height: 32px;
 }
 .round-corners-1x {
   border-radius: var(--space-1x);
 }
-.btn-disabled {
-  background-color: var(--text-30);
+.main {
+  display: flex;
+  min-height: 100vh;
+  background-color: var(--background-60);
 }
-.btn-disabled:active {
-  background-color: var(--text-10);
+.container {
+  box-shadow: 2px 2px 8px 2px var(--text-5);
+  border-radius: var(--space-2x);
+  margin: var(--space-5x) auto;
+  padding: var(--space-6x);
+  width: min(1280px, 70vw);
+  min-width: 320px;
+  background-color: var(--background);
 }
-.active-toggle {
-  background-color: var(--secondary);
+.lib-header {
+  gap: var(--space-2x);
+  margin-top: var(--space-4x);
+  margin-bottom: var(--space-3x);
 }
-.active-toggle:active {
-  background-color: var(--secondary-50);
+.lib-header .btn {
+  gap: var(--space-1x);
+  padding: var(--space-1x);
+  background-color: var(--primary);
+  color: var(--background);
 }
-
+#add-btn img {
+  height: 32px;
+}
+.btn-wrapper .btn {
+  padding: calc(var(--space-1x) * 0.75);
+}
+.read-wrapper {
+  gap: var(--space-1x);
+  color: var(--text-60);
+  font-size: smaller;
+}
+.book-card-icon {
+  height: 32px;
+}
 #library-container {
   margin-top: var(--space-2x);
   display: grid;
@@ -137,26 +120,42 @@ body {
   margin-bottom: var(--space-1x);
   color: var(--text-60);
 }
-.btn-wrapper {
+.book-card .btn-wrapper {
   display: flex;
   justify-content: space-between;
 }
-.btn {
-  border-radius: var(--space-1x);
-  padding: var(--space-1x) var(--space-1x);
-  min-width: none;
-  color: var(--background);
+.btn-primary {
   background-color: var(--primary);
 }
-.del-btn {
+.btn-primary:active {
+  background-color: var(--primary-50);
+}
+.btn-disabled {
+  background-color: var(--text-30);
+}
+.btn-disabled:active {
+  background-color: var(--text-10);
+}
+.btn-secondary {
+  background-color: var(--secondary);
+}
+.btn-secondary:active {
+  background-color: var(--secondary-50);
+}
+.btn-warning {
   background-color: var(--warning);
 }
-.del-btn:active {
+.btn-warning:active {
   background-color: var(--warning-50);
 }
 .primary-color {
   color: var(--primary);
 }
-.hidden {
-  display: none;
-}
+
+/* .btn {
+  border-radius: var(--space-1x);
+  padding: var(--space-1x) var(--space-1x);
+  min-width: none;
+  color: var(--background);
+  background-color: var(--primary);
+} */

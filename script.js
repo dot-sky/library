@@ -45,13 +45,13 @@ function createBookCard(book) {
   readWrapper.classList.add("read-wrapper", "flex", "y-center");
   btnWrapper.classList.add("btn-wrapper");
 
-  delButton.classList.add("icon-btn", "round-corners-1x", "del-btn");
+  delButton.classList.add("btn", "round-corners-1x", "btn-warning");
   deleteIconElement.classList.add("book-card-icon");
 
   readIconElement.classList.add("book-card-icon");
-  toggleWrapper.classList.add("icon-btn", "round-corners-1x");
+  toggleWrapper.classList.add("btn", "round-corners-1x");
   if (book.read) {
-    toggleWrapper.classList.add("active-toggle");
+    toggleWrapper.classList.add("btn-secondary");
   } else {
     toggleWrapper.classList.add("btn-disabled");
   }
@@ -90,9 +90,9 @@ function createBookCard(book) {
     let oldClass, currentClass;
     if (book.read) {
       oldClass = "btn-disabled";
-      currentClass = "active-toggle";
+      currentClass = "btn-secondary";
     } else {
-      oldClass = "active-toggle";
+      oldClass = "btn-secondary";
       currentClass = "btn-disabled";
     }
     toggleWrapper.classList.remove(oldClass);
