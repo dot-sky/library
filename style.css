@@ -1,24 +1,21 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap");
 :root {
-  --text: #061b21;
-  --text-80: #737e81;
-  --text-60: #96a4a8;
-  --text-30: #cecece;
-  --text-20: #dfdddd;
-  --text-10: #e1e6e6;
+  --text: #3b4245;
   --text-5: #f0f0f0;
+  --text-10: #e1e6e6;
+  --text-30: #cecece;
+  --text-60: #96a4a8;
+  --text-80: #737e81;
   --background: #fafdfe;
   --background-60: #f3f4f8;
   --primary: #40c2e2;
-  --primary-20: #ecf9fc;
   --primary-50: #68d0e9;
   --secondary: #ffc61a;
-  --secondary-50: #fed14c;
   --secondary-20: #fef0ec;
-  --accent: #7e58e2;
-  --accent-50: #a084e5;
+  --secondary-50: #fed14c;
   --warning: #db4e4e;
   --warning-50: #d96a6a;
+
   --space-1x: 8px;
   --space-2x: 16px;
   --space-3x: 24px;
