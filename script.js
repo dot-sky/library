@@ -2,6 +2,7 @@ const iconPath = "icon/";
 const library = [];
 const bookCheckIcon = iconPath + "book-check.svg";
 const bookClockIcon = iconPath + "book-clock.svg";
+const deleteIcon = iconPath + "trash-can.svg";
 function Book(name, author, year, pages, read) {
   this.id = Book.id; // unique identifier for every book object
   this.name = name;
@@ -33,7 +34,9 @@ function createBookCard(book) {
   let readWrapper = document.createElement("div");
   let readDesc = document.createElement("div");
   let toggleWrapper = document.createElement("div");
+
   let readIconElement = document.createElement("img");
+  let deleteIconElement = document.createElement("img");
 
   bookCard.classList.add("book-card", "flex");
   title.classList.add("title");
@@ -41,7 +44,10 @@ function createBookCard(book) {
   readDesc.classList.add("status");
   readWrapper.classList.add("read-wrapper", "flex", "y-center");
   btnWrapper.classList.add("btn-wrapper");
-  delButton.classList.add("btn", "del-btn");
+
+  delButton.classList.add("icon-btn", "round-corners-1x", "del-btn");
+  deleteIconElement.classList.add("book-card-icon");
+
   readIconElement.classList.add("book-card-icon");
   toggleWrapper.classList.add("icon-btn", "round-corners-1x");
   if (book.read) {
@@ -54,9 +60,10 @@ function createBookCard(book) {
   desc.textContent = `${book.author} (${book.year})`;
   pages.textContent = `${book.pages} ${book.pages > 1 ? "pages" : "page"}`;
   readDesc.textContent = book.read ? "Already read" : "Not read yet";
-  delButton.textContent = "X";
+  // delButton.textContent = "X";
   let readIcon = book.read ? bookCheckIcon : bookClockIcon;
   readIconElement.src = readIcon;
+  deleteIconElement.src = deleteIcon;
 
   contentSection.appendChild(title);
   contentSection.appendChild(desc);
@@ -64,6 +71,7 @@ function createBookCard(book) {
   toggleWrapper.appendChild(readIconElement);
   readWrapper.appendChild(readDesc);
   readWrapper.appendChild(toggleWrapper);
+  delButton.appendChild(deleteIconElement);
   btnWrapper.appendChild(delButton);
   btnWrapper.appendChild(readWrapper);
   bookCard.appendChild(contentSection);
