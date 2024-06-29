@@ -83,6 +83,9 @@ body {
   background-color: var(--primary);
   color: var(--background);
 }
+.lib-header div:first-child {
+  gap: var(--space-2x);
+}
 #add-btn img {
   height: 32px;
 }
