@@ -134,9 +134,11 @@ class LibraryController {
   }
 
   bindEvents() {
-    this.showDialog.addEventListener("click", () => this.showForm);
-    this.addButton.addEventListener("click", () => this.addBookButton);
-    this.cancelButton.addEventListener("click", () => this.cancelFormButton);
+    this.showDialog.addEventListener("click", () => this.showForm());
+    this.addButton.addEventListener("click", (event) =>
+      this.addBookButton(event)
+    );
+    this.cancelButton.addEventListener("click", () => this.cancelFormButton());
   }
   createBookForm(title, author, year, pages, read) {
     let newBook = new Book(title, author, year, pages, read);
@@ -146,6 +148,7 @@ class LibraryController {
     this.dialogForm.showModal();
   }
   addBookButton(event) {
+    // console.log("fire");
     event.preventDefault();
     let year = parseInt(yearField.value);
     let pages = parseInt(pagesField.value);
