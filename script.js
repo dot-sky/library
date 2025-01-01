@@ -3,27 +3,26 @@ const library = [];
 const bookCheckIcon = iconPath + "book-check.svg";
 const bookClockIcon = iconPath + "book-clock.svg";
 const deleteIcon = iconPath + "trash-can.svg";
-function Book(name, author, year, pages, read) {
-  this.id = Book.id; // unique identifier for every book object
-  this.name = name;
-  this.author = author;
-  this.year = year;
-  this.pages = pages;
-  this.read = read;
-  Book.id++;
-}
-Object.defineProperty(Book, "id", {
-  value: 0,
-  writable: true,
-  enumerable: true,
-});
 
-Book.prototype.info = function () {
-  return `${this.id} - ${this.name} by ${this.author} (${this.year}), ${this.read}`;
-};
-Book.prototype.switchReadStatus = function () {
-  this.read = !this.read;
-};
+class Book {
+  static id = 0;
+  constructor(name, author, year, pages, read) {
+    this.id = Book.id; // unique identifier for every book object
+    this.name = name;
+    this.author = author;
+    this.year = year;
+    this.pages = pages;
+    this.read = read;
+    Book.id++;
+  }
+  info() {
+    return `${this.id} - ${this.name} by ${this.author} (${this.year}), ${this.read}`;
+  }
+  switchReadStatus() {
+    this.read = !this.read;
+  }
+}
+
 function createBookCard(book) {
   let bookCard = document.createElement("div");
   let contentSection = document.createElement("div");
@@ -57,11 +56,13 @@ function createBookCard(book) {
   } else {
     toggleWrapper.classList.add("btn-disabled");
   }
+
   // content
   title.textContent = book.name;
   desc.textContent = `${book.author} (${book.year})`;
   pages.textContent = `${book.pages} ${book.pages > 1 ? "pages" : "page"}`;
   readDesc.textContent = book.read ? "Already read" : "Not read yet";
+
   // delButton.textContent = "X";
   let readIcon = book.read ? bookCheckIcon : bookClockIcon;
   readIconElement.src = readIcon;
@@ -78,11 +79,14 @@ function createBookCard(book) {
   btnWrapper.appendChild(readWrapper);
   bookCard.appendChild(contentSection);
   bookCard.appendChild(btnWrapper);
+
   libraryContainer.appendChild(bookCard);
+
   delButton.addEventListener("click", () => {
     removeFromLibrary(book.id);
     libraryContainer.removeChild(bookCard);
   });
+
   toggleWrapper.addEventListener("click", () => {
     book.switchReadStatus();
     readDesc.textContent = book.read ? "Already read" : "Not read yet";
@@ -168,7 +172,14 @@ let b3 = new Book(
   436,
   1
 );
-let b5 = new Book(
+let b5 = new Book("Th Ministry for the Future", "Kim Stanley Robinson", 720, 0);
+let b6 = new Book(
+  "The Ministry for the Future",
+  "Kim Stanley Robinson",
+  720,
+  0
+);
+let b7 = new Book(
   "The Ministry for the Future",
   "Kim Stanley Robinson",
   720,
@@ -179,4 +190,7 @@ addToLibrary(b1);
 addToLibrary(b2);
 addToLibrary(b3);
 // addToLibrary(b4);
+console.log(b5);
+console.log(b6);
+console.log(b7);
 console.log(library);
