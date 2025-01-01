@@ -1,9 +1,3 @@
-const iconPath = "icons/";
-const library = [];
-const bookCheckIcon = iconPath + "book-check.svg";
-const bookClockIcon = iconPath + "book-clock.svg";
-const deleteIcon = iconPath + "trash-can.svg";
-
 class Book {
   static id = 0;
   constructor(name, author, year, pages, read) {
@@ -23,75 +17,242 @@ class Book {
   }
 }
 
-function createBookCard(book) {
-  let bookCard = document.createElement("div");
-  let contentSection = document.createElement("div");
-  let title = document.createElement("div");
-  let desc = document.createElement("div");
-  let pages = document.createElement("div");
+class BookCard {
+  constructor(book) {
+    this.book = book;
+    // create elements
+    this.bookCard = document.createElement("div");
+    this.contentSection = document.createElement("div");
+    this.title = document.createElement("div");
+    this.desc = document.createElement("div");
+    this.pages = document.createElement("div");
 
-  let btnWrapper = document.createElement("div");
-  let delButton = document.createElement("div");
-  let readWrapper = document.createElement("div");
-  let readDesc = document.createElement("div");
-  let toggleWrapper = document.createElement("div");
+    this.btnWrapper = document.createElement("div");
+    this.delButton = document.createElement("div");
+    this.readWrapper = document.createElement("div");
+    this.readDesc = document.createElement("div");
+    this.toggleWrapper = document.createElement("div");
+    this.readIconElement = document.createElement("img");
+    this.deleteIconElement = document.createElement("img");
 
-  let readIconElement = document.createElement("img");
-  let deleteIconElement = document.createElement("img");
+    // apply style
+    this.bookCard.classList.add("book-card", "flex");
+    this.title.classList.add("title");
+    this.desc.classList.add("desc");
+    this.readDesc.classList.add("status");
+    this.readWrapper.classList.add("read-wrapper", "flex", "y-center");
+    this.btnWrapper.classList.add("btn-wrapper");
 
-  bookCard.classList.add("book-card", "flex");
-  title.classList.add("title");
-  desc.classList.add("desc");
-  readDesc.classList.add("status");
-  readWrapper.classList.add("read-wrapper", "flex", "y-center");
-  btnWrapper.classList.add("btn-wrapper");
+    this.delButton.classList.add("btn", "round-corners-1x", "btn-warning");
+    this.deleteIconElement.classList.add("book-card-icon");
 
-  delButton.classList.add("btn", "round-corners-1x", "btn-warning");
-  deleteIconElement.classList.add("book-card-icon");
+    this.readIconElement.classList.add("book-card-icon");
+    this.toggleWrapper.classList.add("btn", "round-corners-1x");
+    if (this.book.read) {
+      this.toggleWrapper.classList.add("btn-secondary");
+    } else {
+      this.toggleWrapper.classList.add("btn-disabled");
+    }
 
-  readIconElement.classList.add("book-card-icon");
-  toggleWrapper.classList.add("btn", "round-corners-1x");
-  if (book.read) {
-    toggleWrapper.classList.add("btn-secondary");
-  } else {
-    toggleWrapper.classList.add("btn-disabled");
+    // add content
+    this.title.textContent = this.book.name;
+    this.desc.textContent = `${this.book.author} (${this.book.year})`;
+    this.pages.textContent = `${this.book.pages} ${
+      this.book.pages > 1 ? "pages" : "page"
+    }`;
+    this.readDesc.textContent = this.book.read
+      ? "Already read"
+      : "Not read yet";
+
+    this.readIcon = this.book.read ? bookCheckIcon : bookClockIcon;
+    this.readIconElement.src = this.readIcon;
+    this.deleteIconElement.src = deleteIcon;
+
+    this.contentSection.appendChild(title);
+    this.contentSection.appendChild(desc);
+    this.contentSection.appendChild(pages);
+    this.toggleWrapper.appendChild(readIconElement);
+    this.readWrapper.appendChild(readDesc);
+    this.readWrapper.appendChild(toggleWrapper);
+    this.delButton.appendChild(deleteIconElement);
+    this.btnWrapper.appendChild(delButton);
+    this.btnWrapper.appendChild(readWrapper);
+    this.bookCard.appendChild(contentSection);
+    this.bookCard.appendChild(btnWrapper);
+
+    libraryContainer.appendChild(bookCard);
+  }
+}
+
+class Library {
+  constructor() {
+    this.books = [];
+  }
+  addBook(book) {
+    this.books.push(book);
+  }
+  removeBook(bookId) {
+    let index = this.books.findIndex((book) => book.id === bookId);
+    if (index !== -1) {
+      this.books.splice(index, 1);
+    }
+  }
+}
+class LibraryController {
+  iconPath = "icons/";
+  bookCheckIcon = this.iconPath + "book-check.svg";
+  bookClockIcon = this.iconPath + "book-clock.svg";
+  deleteIcon = this.iconPath + "trash-can.svg";
+
+  constructor(doc) {
+    this.library = new Library();
+    // DOM elements
+    this.libraryContainer = doc.getElementById("library-container");
+    this.showDialog = doc.getElementById("add-btn");
+    this.dialogForm = doc.getElementById("dialog-form");
+    this.addButton = doc.querySelector(`dialog#dialog-form input#confirm`);
+    this.cancelButton = doc.querySelector(
+      `dialog#dialog-form input#noval-close`
+    );
+    // input
+    this.titleField = doc.querySelector("input#title");
+    this.authorField = doc.querySelector("input#author");
+    this.yearField = doc.querySelector("input#year");
+    this.pagesField = doc.querySelector("input#pages");
+    this.readField = doc.querySelector("input#read-status1");
+
+    this.bindEvents();
   }
 
-  // content
-  title.textContent = book.name;
-  desc.textContent = `${book.author} (${book.year})`;
-  pages.textContent = `${book.pages} ${book.pages > 1 ? "pages" : "page"}`;
-  readDesc.textContent = book.read ? "Already read" : "Not read yet";
+  addToLibrary(book) {
+    this.library.addBook(book);
+    this.createBookCard(book); // <--- fix
+  }
 
-  // delButton.textContent = "X";
-  let readIcon = book.read ? bookCheckIcon : bookClockIcon;
-  readIconElement.src = readIcon;
-  deleteIconElement.src = deleteIcon;
+  removeFromLibrary(bookId) {
+    this.library.removeBook(bookId);
+  }
 
-  contentSection.appendChild(title);
-  contentSection.appendChild(desc);
-  contentSection.appendChild(pages);
-  toggleWrapper.appendChild(readIconElement);
-  readWrapper.appendChild(readDesc);
-  readWrapper.appendChild(toggleWrapper);
-  delButton.appendChild(deleteIconElement);
-  btnWrapper.appendChild(delButton);
-  btnWrapper.appendChild(readWrapper);
-  bookCard.appendChild(contentSection);
-  bookCard.appendChild(btnWrapper);
+  bindEvents() {
+    this.showDialog.addEventListener("click", () => this.showForm);
+    this.addButton.addEventListener("click", () => this.addBookButton);
+    this.cancelButton.addEventListener("click", () => this.cancelFormButton);
+  }
+  createBookForm(title, author, year, pages, read) {
+    let newBook = new Book(title, author, year, pages, read);
+    this.addToLibrary(newBook);
+  }
+  showForm() {
+    this.dialogForm.showModal();
+  }
+  addBookButton(event) {
+    event.preventDefault();
+    let year = parseInt(yearField.value);
+    let pages = parseInt(pagesField.value);
+    let readStatus = readField.checked;
+    this.createBookForm(
+      titleField.value,
+      authorField.value,
+      year,
+      pages,
+      readStatus
+    );
+    this.resetDialogFields();
+    this.dialogForm.close();
+  }
+  cancelFormButton() {
+    this.resetDialogFields();
+  }
+  resetDialogFields() {
+    this.titleField.value = "";
+    this.authorField.value = "";
+    this.yearField.value = "";
+    this.pagesField.value = "";
+    this.readField.checked = true;
+  }
 
-  libraryContainer.appendChild(bookCard);
+  createBookCard(book) {
+    let bookCard = document.createElement("div");
+    let contentSection = document.createElement("div");
+    let title = document.createElement("div");
+    let desc = document.createElement("div");
+    let pages = document.createElement("div");
 
-  delButton.addEventListener("click", () => {
-    removeFromLibrary(book.id);
-    libraryContainer.removeChild(bookCard);
-  });
+    let btnWrapper = document.createElement("div");
+    let delButton = document.createElement("div");
+    let readWrapper = document.createElement("div");
+    let readDesc = document.createElement("div");
+    let toggleWrapper = document.createElement("div");
 
-  toggleWrapper.addEventListener("click", () => {
-    book.switchReadStatus();
+    let readIconElement = document.createElement("img");
+    let deleteIconElement = document.createElement("img");
+
+    bookCard.classList.add("book-card", "flex");
+    title.classList.add("title");
+    desc.classList.add("desc");
+    readDesc.classList.add("status");
+    readWrapper.classList.add("read-wrapper", "flex", "y-center");
+    btnWrapper.classList.add("btn-wrapper");
+
+    delButton.classList.add("btn", "round-corners-1x", "btn-warning");
+    deleteIconElement.classList.add("book-card-icon");
+
+    readIconElement.classList.add("book-card-icon");
+    toggleWrapper.classList.add("btn", "round-corners-1x");
+    if (book.read) {
+      toggleWrapper.classList.add("btn-secondary");
+    } else {
+      toggleWrapper.classList.add("btn-disabled");
+    }
+
+    // content
+    title.textContent = book.name;
+    desc.textContent = `${book.author} (${book.year})`;
+    pages.textContent = `${book.pages} ${book.pages > 1 ? "pages" : "page"}`;
     readDesc.textContent = book.read ? "Already read" : "Not read yet";
-    let readIcon = book.read ? bookCheckIcon : bookClockIcon;
+
+    // delButton.textContent = "X";
+    let readIcon = book.read ? this.bookCheckIcon : this.bookClockIcon;
     readIconElement.src = readIcon;
+    deleteIconElement.src = this.deleteIcon;
+
+    contentSection.appendChild(title);
+    contentSection.appendChild(desc);
+    contentSection.appendChild(pages);
+    toggleWrapper.appendChild(readIconElement);
+    readWrapper.appendChild(readDesc);
+    readWrapper.appendChild(toggleWrapper);
+    delButton.appendChild(deleteIconElement);
+    btnWrapper.appendChild(delButton);
+    btnWrapper.appendChild(readWrapper);
+    bookCard.appendChild(contentSection);
+    bookCard.appendChild(btnWrapper);
+
+    this.libraryContainer.appendChild(bookCard);
+    this.bookCardBindEvents(
+      { delButton, readDesc, readIconElement, toggleWrapper },
+      bookCard,
+      book
+    );
+  }
+  bookCardBindEvents(elements, bookCard, book) {
+    elements.delButton.addEventListener("click", () =>
+      this.removeBook(bookCard, book)
+    );
+
+    elements.toggleWrapper.addEventListener("click", () =>
+      this.switchReadStatus(elements, book)
+    );
+  }
+  removeBook(bookCard, book) {
+    this.removeFromLibrary(book.id);
+    this.libraryContainer.removeChild(bookCard);
+  }
+  switchReadStatus(elements, book) {
+    book.switchReadStatus();
+    elements.readDesc.textContent = book.read ? "Already read" : "Not read yet";
+    let readIcon = book.read ? this.bookCheckIcon : this.bookClockIcon;
+    elements.readIconElement.src = readIcon;
     // change background of toggle wrapper
     let oldClass, currentClass;
     if (book.read) {
@@ -101,61 +262,10 @@ function createBookCard(book) {
       oldClass = "btn-secondary";
       currentClass = "btn-disabled";
     }
-    toggleWrapper.classList.remove(oldClass);
-    toggleWrapper.classList.add(currentClass);
-    console.log(library);
-  });
-}
-function addToLibrary(book) {
-  library.push(book);
-  createBookCard(book);
-}
-function removeFromLibrary(bookId) {
-  let index = library.findIndex((book) => book.id === bookId);
-  if (index !== -1) {
-    library.splice(index, 1);
+    elements.toggleWrapper.classList.remove(oldClass);
+    elements.toggleWrapper.classList.add(currentClass);
   }
 }
-const libraryContainer = document.getElementById("library-container");
-const showDialog = document.getElementById("add-btn");
-const dialogForm = document.getElementById("dialog-form");
-const addButton = document.querySelector(`dialog#dialog-form input#confirm`);
-const cancelButton = document.querySelector(
-  `dialog#dialog-form input#noval-close`
-);
-// input
-const titleField = document.querySelector("input#title");
-const authorField = document.querySelector("input#author");
-const yearField = document.querySelector("input#year");
-const pagesField = document.querySelector("input#pages");
-const readField = document.querySelector("input#read-status1");
-// event listeners
-function createBookForm(title, author, year, pages, read) {
-  let newBook = new Book(title, author, year, pages, read);
-  addToLibrary(newBook);
-}
-function resetDialogFields() {
-  titleField.value = "";
-  authorField.value = "";
-  yearField.value = "";
-  pagesField.value = "";
-  readField.checked = true;
-}
-showDialog.addEventListener("click", () => {
-  dialogForm.showModal();
-});
-addButton.addEventListener("click", (event) => {
-  event.preventDefault();
-  let year = parseInt(yearField.value);
-  let pages = parseInt(pagesField.value);
-  let readStatus = readField.checked;
-  createBookForm(titleField.value, authorField.value, year, pages, readStatus);
-  resetDialogFields();
-  dialogForm.close();
-});
-cancelButton.addEventListener("click", () => {
-  resetDialogFields();
-});
 // main
 let b1 = new Book("Pride and Prejudice", "Jane Austen", 1813, 352, 0);
 let b2 = new Book(
@@ -186,11 +296,14 @@ let b7 = new Book(
   0
 );
 
-addToLibrary(b1);
-addToLibrary(b2);
-addToLibrary(b3);
+const library = new LibraryController(document);
+library.addToLibrary(b1);
+library.addToLibrary(b2);
+library.addToLibrary(b3);
+// addToLibrary(b1);
+// addToLibrary(b2);
+// addToLibrary(b3);
 // addToLibrary(b4);
 console.log(b5);
 console.log(b6);
 console.log(b7);
-console.log(library);
