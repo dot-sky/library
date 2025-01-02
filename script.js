@@ -17,73 +17,6 @@ class Book {
   }
 }
 
-class BookCard {
-  constructor(book) {
-    this.book = book;
-    // create elements
-    this.bookCard = document.createElement("div");
-    this.contentSection = document.createElement("div");
-    this.title = document.createElement("div");
-    this.desc = document.createElement("div");
-    this.pages = document.createElement("div");
-
-    this.btnWrapper = document.createElement("div");
-    this.delButton = document.createElement("div");
-    this.readWrapper = document.createElement("div");
-    this.readDesc = document.createElement("div");
-    this.toggleWrapper = document.createElement("div");
-    this.readIconElement = document.createElement("img");
-    this.deleteIconElement = document.createElement("img");
-
-    // apply style
-    this.bookCard.classList.add("book-card", "flex");
-    this.title.classList.add("title");
-    this.desc.classList.add("desc");
-    this.readDesc.classList.add("status");
-    this.readWrapper.classList.add("read-wrapper", "flex", "y-center");
-    this.btnWrapper.classList.add("btn-wrapper");
-
-    this.delButton.classList.add("btn", "round-corners-1x", "btn-warning");
-    this.deleteIconElement.classList.add("book-card-icon");
-
-    this.readIconElement.classList.add("book-card-icon");
-    this.toggleWrapper.classList.add("btn", "round-corners-1x");
-    if (this.book.read) {
-      this.toggleWrapper.classList.add("btn-secondary");
-    } else {
-      this.toggleWrapper.classList.add("btn-disabled");
-    }
-
-    // add content
-    this.title.textContent = this.book.name;
-    this.desc.textContent = `${this.book.author} (${this.book.year})`;
-    this.pages.textContent = `${this.book.pages} ${
-      this.book.pages > 1 ? "pages" : "page"
-    }`;
-    this.readDesc.textContent = this.book.read
-      ? "Already read"
-      : "Not read yet";
-
-    this.readIcon = this.book.read ? bookCheckIcon : bookClockIcon;
-    this.readIconElement.src = this.readIcon;
-    this.deleteIconElement.src = deleteIcon;
-
-    this.contentSection.appendChild(title);
-    this.contentSection.appendChild(desc);
-    this.contentSection.appendChild(pages);
-    this.toggleWrapper.appendChild(readIconElement);
-    this.readWrapper.appendChild(readDesc);
-    this.readWrapper.appendChild(toggleWrapper);
-    this.delButton.appendChild(deleteIconElement);
-    this.btnWrapper.appendChild(delButton);
-    this.btnWrapper.appendChild(readWrapper);
-    this.bookCard.appendChild(contentSection);
-    this.bookCard.appendChild(btnWrapper);
-
-    libraryContainer.appendChild(bookCard);
-  }
-}
-
 class Library {
   constructor() {
     this.books = [];
@@ -126,7 +59,7 @@ class LibraryController {
 
   addToLibrary(book) {
     this.library.addBook(book);
-    this.createBookCard(book); // <--- fix
+    this.createBookCard(book);
   }
 
   removeFromLibrary(bookId) {
@@ -150,12 +83,12 @@ class LibraryController {
   addBookButton(event) {
     // console.log("fire");
     event.preventDefault();
-    let year = parseInt(yearField.value);
-    let pages = parseInt(pagesField.value);
-    let readStatus = readField.checked;
+    let year = parseInt(this.yearField.value);
+    let pages = parseInt(this.pagesField.value);
+    let readStatus = this.readField.checked;
     this.createBookForm(
-      titleField.value,
-      authorField.value,
+      this.titleField.value,
+      this.authorField.value,
       year,
       pages,
       readStatus
