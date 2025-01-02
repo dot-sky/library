@@ -216,7 +216,7 @@ class LibraryController {
   }
 }
 // main
-(function (document) {
+(function (doc) {
   let b1 = new Book("Pride and Prejudice", "Jane Austen", 1813, 352, 0);
   let b2 = new Book(
     "One Hundred Years of Solitude",
@@ -239,7 +239,7 @@ class LibraryController {
     720,
     0
   );
-  const library = new LibraryController(document);
+  const library = new LibraryController(doc);
   library.addToLibrary(b1);
   library.addToLibrary(b2);
   library.addToLibrary(b3);
