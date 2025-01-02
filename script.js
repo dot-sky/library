@@ -9,9 +9,11 @@ class Book {
     this.read = read;
     Book.id++;
   }
+
   info() {
     return `${this.id} - ${this.name} by ${this.author} (${this.year}), ${this.read}`;
   }
+
   switchReadStatus() {
     this.read = !this.read;
   }
@@ -21,9 +23,11 @@ class Library {
   constructor() {
     this.books = [];
   }
+
   addBook(book) {
     this.books.push(book);
   }
+
   removeBook(bookId) {
     let index = this.books.findIndex((book) => book.id === bookId);
     if (index !== -1) {
@@ -39,6 +43,7 @@ class LibraryController {
 
   constructor(doc) {
     this.library = new Library();
+
     // DOM elements
     this.libraryContainer = doc.getElementById("library-container");
     this.showDialog = doc.getElementById("add-btn");
@@ -47,6 +52,7 @@ class LibraryController {
     this.cancelButton = doc.querySelector(
       `dialog#dialog-form input#noval-close`
     );
+
     // input
     this.titleField = doc.querySelector("input#title");
     this.authorField = doc.querySelector("input#author");
@@ -73,13 +79,11 @@ class LibraryController {
     );
     this.cancelButton.addEventListener("click", () => this.#cancelFormButton());
   }
-  #createBookForm(title, author, year, pages, read) {
-    let newBook = new Book(title, author, year, pages, read);
-    this.addToLibrary(newBook);
-  }
+
   #showForm() {
     this.dialogForm.showModal();
   }
+
   #addBookButton(event) {
     // console.log("fire");
     event.preventDefault();
@@ -96,9 +100,16 @@ class LibraryController {
     this.#resetDialogFields();
     this.dialogForm.close();
   }
+
   #cancelFormButton() {
     this.#resetDialogFields();
   }
+
+  #createBookForm(title, author, year, pages, read) {
+    let newBook = new Book(title, author, year, pages, read);
+    this.addToLibrary(newBook);
+  }
+
   #resetDialogFields() {
     this.titleField.value = "";
     this.authorField.value = "";
@@ -171,19 +182,21 @@ class LibraryController {
       book
     );
   }
+
   #bookCardBindEvents(elements, bookCard, book) {
     elements.delButton.addEventListener("click", () =>
       this.#removeBook(bookCard, book)
     );
-
     elements.toggleWrapper.addEventListener("click", () =>
       this.#switchReadStatus(elements, book)
     );
   }
+
   #removeBook(bookCard, book) {
     this.#removeFromLibrary(book.id);
     this.libraryContainer.removeChild(bookCard);
   }
+
   #switchReadStatus(elements, book) {
     book.switchReadStatus();
     elements.readDesc.textContent = book.read ? "Already read" : "Not read yet";
