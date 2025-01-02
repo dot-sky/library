@@ -32,10 +32,10 @@ class Library {
   }
 }
 class LibraryController {
-  iconPath = "icons/";
-  bookCheckIcon = this.iconPath + "book-check.svg";
-  bookClockIcon = this.iconPath + "book-clock.svg";
-  deleteIcon = this.iconPath + "trash-can.svg";
+  #iconPath = "icons/";
+  #bookCheckIcon = this.#iconPath + "book-check.svg";
+  #bookClockIcon = this.#iconPath + "book-clock.svg";
+  #deleteIcon = this.#iconPath + "trash-can.svg";
 
   constructor(doc) {
     this.library = new Library();
@@ -54,52 +54,52 @@ class LibraryController {
     this.pagesField = doc.querySelector("input#pages");
     this.readField = doc.querySelector("input#read-status1");
 
-    this.bindEvents();
+    this.#bindEvents();
   }
 
   addToLibrary(book) {
     this.library.addBook(book);
-    this.createBookCard(book);
+    this.#createBookCard(book);
   }
 
-  removeFromLibrary(bookId) {
+  #removeFromLibrary(bookId) {
     this.library.removeBook(bookId);
   }
 
-  bindEvents() {
-    this.showDialog.addEventListener("click", () => this.showForm());
+  #bindEvents() {
+    this.showDialog.addEventListener("click", () => this.#showForm());
     this.addButton.addEventListener("click", (event) =>
-      this.addBookButton(event)
+      this.#addBookButton(event)
     );
-    this.cancelButton.addEventListener("click", () => this.cancelFormButton());
+    this.cancelButton.addEventListener("click", () => this.#cancelFormButton());
   }
-  createBookForm(title, author, year, pages, read) {
+  #createBookForm(title, author, year, pages, read) {
     let newBook = new Book(title, author, year, pages, read);
     this.addToLibrary(newBook);
   }
-  showForm() {
+  #showForm() {
     this.dialogForm.showModal();
   }
-  addBookButton(event) {
+  #addBookButton(event) {
     // console.log("fire");
     event.preventDefault();
     let year = parseInt(this.yearField.value);
     let pages = parseInt(this.pagesField.value);
     let readStatus = this.readField.checked;
-    this.createBookForm(
+    this.#createBookForm(
       this.titleField.value,
       this.authorField.value,
       year,
       pages,
       readStatus
     );
-    this.resetDialogFields();
+    this.#resetDialogFields();
     this.dialogForm.close();
   }
-  cancelFormButton() {
-    this.resetDialogFields();
+  #cancelFormButton() {
+    this.#resetDialogFields();
   }
-  resetDialogFields() {
+  #resetDialogFields() {
     this.titleField.value = "";
     this.authorField.value = "";
     this.yearField.value = "";
@@ -107,7 +107,7 @@ class LibraryController {
     this.readField.checked = true;
   }
 
-  createBookCard(book) {
+  #createBookCard(book) {
     let bookCard = document.createElement("div");
     let contentSection = document.createElement("div");
     let title = document.createElement("div");
@@ -148,9 +148,9 @@ class LibraryController {
     readDesc.textContent = book.read ? "Already read" : "Not read yet";
 
     // delButton.textContent = "X";
-    let readIcon = book.read ? this.bookCheckIcon : this.bookClockIcon;
+    let readIcon = book.read ? this.#bookCheckIcon : this.#bookClockIcon;
     readIconElement.src = readIcon;
-    deleteIconElement.src = this.deleteIcon;
+    deleteIconElement.src = this.#deleteIcon;
 
     contentSection.appendChild(title);
     contentSection.appendChild(desc);
@@ -165,29 +165,29 @@ class LibraryController {
     bookCard.appendChild(btnWrapper);
 
     this.libraryContainer.appendChild(bookCard);
-    this.bookCardBindEvents(
+    this.#bookCardBindEvents(
       { delButton, readDesc, readIconElement, toggleWrapper },
       bookCard,
       book
     );
   }
-  bookCardBindEvents(elements, bookCard, book) {
+  #bookCardBindEvents(elements, bookCard, book) {
     elements.delButton.addEventListener("click", () =>
-      this.removeBook(bookCard, book)
+      this.#removeBook(bookCard, book)
     );
 
     elements.toggleWrapper.addEventListener("click", () =>
-      this.switchReadStatus(elements, book)
+      this.#switchReadStatus(elements, book)
     );
   }
-  removeBook(bookCard, book) {
-    this.removeFromLibrary(book.id);
+  #removeBook(bookCard, book) {
+    this.#removeFromLibrary(book.id);
     this.libraryContainer.removeChild(bookCard);
   }
-  switchReadStatus(elements, book) {
+  #switchReadStatus(elements, book) {
     book.switchReadStatus();
     elements.readDesc.textContent = book.read ? "Already read" : "Not read yet";
-    let readIcon = book.read ? this.bookCheckIcon : this.bookClockIcon;
+    let readIcon = book.read ? this.#bookCheckIcon : this.#bookClockIcon;
     elements.readIconElement.src = readIcon;
     // change background of toggle wrapper
     let oldClass, currentClass;
@@ -203,43 +203,32 @@ class LibraryController {
   }
 }
 // main
-let b1 = new Book("Pride and Prejudice", "Jane Austen", 1813, 352, 0);
-let b2 = new Book(
-  "One Hundred Years of Solitude",
-  "Gabriel Garcia Marquez",
-  1967,
-  487,
-  1
-);
-let b3 = new Book(
-  "The Lord of the Rings: The Fellowship of the Ring",
-  "J.R.R. Tolkien",
-  1954,
-  436,
-  1
-);
-let b5 = new Book("Th Ministry for the Future", "Kim Stanley Robinson", 720, 0);
-let b6 = new Book(
-  "The Ministry for the Future",
-  "Kim Stanley Robinson",
-  720,
-  0
-);
-let b7 = new Book(
-  "The Ministry for the Future",
-  "Kim Stanley Robinson",
-  720,
-  0
-);
-
-const library = new LibraryController(document);
-library.addToLibrary(b1);
-library.addToLibrary(b2);
-library.addToLibrary(b3);
-// addToLibrary(b1);
-// addToLibrary(b2);
-// addToLibrary(b3);
-// addToLibrary(b4);
-console.log(b5);
-console.log(b6);
-console.log(b7);
+(function (document) {
+  let b1 = new Book("Pride and Prejudice", "Jane Austen", 1813, 352, 0);
+  let b2 = new Book(
+    "One Hundred Years of Solitude",
+    "Gabriel Garcia Marquez",
+    1967,
+    487,
+    1
+  );
+  let b3 = new Book(
+    "The Lord of the Rings: The Fellowship of the Ring",
+    "J.R.R. Tolkien",
+    1954,
+    436,
+    1
+  );
+  let b4 = new Book(
+    "Th Ministry for the Future",
+    "Kim Stanley Robinson",
+    2019,
+    720,
+    0
+  );
+  const library = new LibraryController(document);
+  library.addToLibrary(b1);
+  library.addToLibrary(b2);
+  library.addToLibrary(b3);
+  library.addToLibrary(b4);
+})(document);
